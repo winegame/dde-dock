@@ -229,17 +229,18 @@ void PowerPlugin::refreshTipsData()
     }
     else if (batteryState == BatteryState::FULLY_CHARGED || percentage == 100.){
         m_tipsLabel->setText(tr("Charged %1").arg(value));
-    }else {
+    } else {
         qulonglong timeToFull = m_systemPowerInter->batteryTimeToFull();
         QDateTime time = QDateTime::fromTime_t(timeToFull).toUTC();
         uint hour = time.toString("hh").toUInt();
         uint min = time.toString("mm").toUInt();
         QString tips;
 
-        if (hour == 0) {
+        if (!timeToFull) {
+            tips = tr("Charging %1").arg(value);
+        } else if (hour == 0) {
             tips = tr("Charging %1, %2 min until full").arg(value).arg(min);
-        }
-        else {
+        } else {
             tips = tr("Charging %1, %2 hr %3 min until full").arg(value).arg(hour).arg(min);
         }
 
