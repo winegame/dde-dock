@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.7)
 
 set(VERSION 4.0)
 
+
+
 project(dde-dock)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
