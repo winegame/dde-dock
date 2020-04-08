@@ -1038,7 +1038,6 @@ void MainWindow::onRegionMonitorChanged()
         setVisible(true);
 }
 
-
 void MainWindow::updateRegionMonitorWatch()
 {
     if (m_settings->hideMode() == KeepShowing)
