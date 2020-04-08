@@ -442,7 +442,6 @@ void DockSettings::primaryScreenChanged()
 
     updateForbidPostions();
     emit dataChanged();
-    emit regionChanged();
     calculateWindowConfig();
 
     // 主屏切换时，如果缩放比例不一样，需要刷新item的图标(bug:3176)
