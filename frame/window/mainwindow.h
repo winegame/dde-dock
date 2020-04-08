@@ -100,7 +100,6 @@ private slots:
     void compositeChanged();
     void internalMove(const QPoint &p);
     void updateDisplayMode();
-    void updateRegion();
 
     void expand();
     void narrow(const Position prevPos);
