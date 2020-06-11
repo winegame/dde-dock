@@ -398,6 +398,7 @@ void NetworkItem::refreshIcon()
     }
     case ConnectNoInternet:
     case AconnectNoInternet:
+    case ObtainIpFailed:
         stateString = "offline";
         iconString = QString("network-wireless-%1-symbolic").arg(stateString);
         break;
@@ -542,6 +543,9 @@ void NetworkItem::getPluginState()
     if ((temp & WirelessItem::Connected) >> 18) {
         wirelessState = WirelessItem::Connected;
     }
+    if ((temp & WirelessItem::ObtainIpFailed) >> 23) {
+        wirelessState = WirelessItem::ObtainIpFailed;
+    }
 
     state = 0;
     temp = 0;
@@ -639,7 +643,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800000:
-        m_pluginState = Adisconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000000:
         m_pluginState = AconnectNoInternet;
@@ -669,7 +673,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800001:
-        m_pluginState = Disconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000001:
         m_pluginState = AconnectNoInternet;
@@ -699,7 +703,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800002:
-        m_pluginState = Adisconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000002:
         m_pluginState = AconnectNoInternet;
@@ -759,7 +763,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800008:
-        m_pluginState = Disconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000008:
         m_pluginState = AconnectNoInternet;
@@ -879,7 +883,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800080:
-        m_pluginState = Disconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000080:
         m_pluginState = AconnectNoInternet;
@@ -909,7 +913,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800100:
-        m_pluginState = BconnectNoInternet;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000100:
         m_pluginState = ConnectNoInternet;
@@ -939,7 +943,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800200:
-        m_pluginState = Adisconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000200:
         m_pluginState = AconnectNoInternet;
@@ -969,7 +973,7 @@ void NetworkItem::getPluginState()
         m_pluginState = Aconnecting;
         break;
     case 0x00800400:
-        m_pluginState = Adisconnected;
+        m_pluginState = ObtainIpFailed;
         break;
     case 0x01000400:
         m_pluginState = AconnectNoInternet;
@@ -997,6 +1001,7 @@ void NetworkItem::getPluginState()
     case BconnectNoInternet:
     case Bfailed:
     case Nocable:
+    case ObtainIpFailed:
         m_switchWireTimer->stop();
         break;
     case Connecting:
@@ -1223,6 +1228,8 @@ void NetworkItem::refreshTips()
     case Nocable:
         m_tipsWidget->setText(tr("Network cable unplugged"));
         break;
+    case ObtainIpFailed:
+        m_tipsWidget->setText(tr("Failed to obtain IP address"));
     }
 }
 
@@ -1254,6 +1261,7 @@ bool NetworkItem::isShowControlCenter()
         case ConnectNoInternet:
         case Disconnected:
         case Disabled:
+        case ObtainIpFailed:
             return true;
         }
     }

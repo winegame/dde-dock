@@ -46,7 +46,8 @@ class NetworkItem : public QWidget
         BconnectNoInternet,
 //        Afailed,
         Bfailed,
-        Nocable
+        Nocable,
+        ObtainIpFailed
     };
 public:
     explicit NetworkItem(QWidget *parent = nullptr);
