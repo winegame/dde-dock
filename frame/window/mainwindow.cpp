@@ -512,6 +512,7 @@ void MainWindow::setGeometry(const QRect &rect)
     lastRect = rect;
     DBlurEffectWidget::setGeometry(rect);
     emit panelGeometryChanged();
+    update();
 }
 
 #include "mainwindow.moc"
