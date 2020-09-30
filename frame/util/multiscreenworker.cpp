@@ -195,6 +195,10 @@ void MultiScreenWorker::handleDbusSignal(QDBusMessage msg)
 
 void MultiScreenWorker::onRegionMonitorChanged(int x, int y, const QString &key)
 {
+    qDebug() << "x = " << x;
+    qDebug() << "y = " << y;
+    qDebug() << "key = " << key;
+
     if (m_registerKey != key)
         return;
 
@@ -204,6 +208,7 @@ void MultiScreenWorker::onRegionMonitorChanged(int x, int y, const QString &key)
         return;
     }
 
+    qDebug() << "enter  tryToShowDock" << key;
     tryToShowDock(x, y);
 }
 

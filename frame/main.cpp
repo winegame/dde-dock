@@ -187,6 +187,7 @@ void sig_crash(int sig)
 
 int main(int argc, char *argv[])
 {
+    qDebug()<<" enter main";
     if (QString(getenv("XDG_CURRENT_DESKTOP")).compare("deepin", Qt::CaseInsensitive) == 0) {
         qDebug() << "Warning: force enable D_DXCB_FORCE_NO_TITLEBAR now!";
         setenv("D_DXCB_FORCE_NO_TITLEBAR", "1", 1);
@@ -235,7 +236,7 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addOption(disablePlugOption);
     parser.process(app);
-
+    qDebug()<<" enter DGuiApplicationHelper";
     DGuiApplicationHelper::setSingleInstanceInterval(-1);
     if (!app.setSingleInstance(QString("dde-dock_%1").arg(getuid()))) {
         qDebug() << "set single instance failed!";
@@ -259,6 +260,6 @@ int main(int argc, char *argv[])
     if (!IsSaveMode() && !parser.isSet(disablePlugOption)) {
         DockItemManager::instance()->startLoadPlugins();
     }
-
+    qDebug()<<" enter exec";
     return app.exec();
 }
