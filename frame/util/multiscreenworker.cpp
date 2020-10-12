@@ -307,11 +307,17 @@ void MultiScreenWorker::showAniFinished()
 {
     const QRect rect = dockRect(m_ds.current(), m_position, HideMode::KeepShowing, m_displayMode);
 
+    qDebug() << "showAniFinished 1111" << rect << parent();
+
     parent()->setFixedSize(rect.size());
     parent()->setGeometry(rect);
 
     parent()->panel()->setFixedSize(rect.size());
     parent()->panel()->move(0, 0);
+
+    parent()->update();
+
+    qDebug() << "showAniFinished 2222" << rect << parent();
 
     emit requestUpdateFrontendGeometry();
     emit requestNotifyWindowManager();
@@ -1088,9 +1094,13 @@ void MultiScreenWorker::reInitDisplayData()
 
 void MultiScreenWorker::showAni(const QString &screen)
 {
+    qDebug() << "MultiScreenWorker::showAni 1111";
     if (m_showAni->state() == QVariantAnimation::Running || m_aniStart)
         return;
     emit requestUpdateFrontendGeometry();
+
+
+    qDebug() << "MultiScreenWorker::showAni 2222";
 
     /************************************************************************
       * 务必先走第一步，再走第二部，否则就会出现从一直隐藏切换为一直显示，任务栏不显示的问题
@@ -1098,6 +1108,8 @@ void MultiScreenWorker::showAni(const QString &screen)
     //1 先停掉其他的动画，否则这里的修改可能会被其他的动画覆盖掉
     if (m_hideAni->state() == QVariantAnimation::Running)
         m_hideAni->stop();
+
+    qDebug() << "MultiScreenWorker::showAni 33333" << dockRect(m_ds.current(), m_position, HideMode::KeepShowing, m_displayMode).size();
 
     parent()->panel()->setFixedSize(dockRect(m_ds.current(), m_position, HideMode::KeepShowing, m_displayMode).size());
     parent()->panel()->move(0, 0);
@@ -1108,12 +1120,16 @@ void MultiScreenWorker::showAni(const QString &screen)
         return;
     }
 
+    qDebug() << "MultiScreenWorker::showAni 44444";
+
     // 显示之前先更新
     emit requestUpdateLayout();
 
     m_showAni->setStartValue(getDockHideGeometry(screen, m_position, m_displayMode));
     m_showAni->setEndValue(getDockShowGeometry(screen, m_position, m_displayMode));
     m_showAni->start();
+
+    qDebug() << "MultiScreenWorker::showAni 55555";
 }
 
 void MultiScreenWorker::hideAni(const QString &screen, const Position &pos, const DisplayMode &displayMode)

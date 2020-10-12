@@ -207,6 +207,12 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     return DBlurEffectWidget::resizeEvent(event);
 }
 
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    DBlurEffectWidget::paintEvent(event);
+    qDebug() <<  "MainWindow::paintEvent";
+}
+
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 {
     QWidget::dragEnterEvent(e);
@@ -352,6 +358,7 @@ bool MainWindow::appIsOnDock(const QString &appDesktop)
 
 void MainWindow::resetDragWindow()
 {
+    qDebug() << m_dragWidget << rect();
     switch (m_multiScreenWorker->position()) {
     case Dock::Top:
         m_dragWidget->setGeometry(0, height() - DRAG_AREA_SIZE, width(), DRAG_AREA_SIZE);

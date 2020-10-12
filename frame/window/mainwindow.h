@@ -141,6 +141,7 @@ private:
     void mouseMoveEvent(QMouseEvent *e) override;
     void moveEvent(QMoveEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
     void initSNIHost();
     void initComponents();

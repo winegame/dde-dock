@@ -1156,6 +1156,8 @@ void NetworkItem::updateMasterControlSwitch()
 
 void NetworkItem::refreshTips()
 {
+    qDebug() << "refreshTips" << m_pluginState << "m_connectedWiredDevice" << m_connectedWiredDevice.count();
+
     switch (m_pluginState) {
     case Disabled:
     case Adisabled:
