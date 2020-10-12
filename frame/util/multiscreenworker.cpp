@@ -195,9 +195,9 @@ void MultiScreenWorker::handleDbusSignal(QDBusMessage msg)
 
 void MultiScreenWorker::onRegionMonitorChanged(int x, int y, const QString &key)
 {
-    qDebug() << "x = " << x;
-    qDebug() << "y = " << y;
-    qDebug() << "key = " << key;
+//    qDebug() << "x = " << x;
+//    qDebug() << "y = " << y;
+//    qDebug() << "key = " << key;
 
     if (m_registerKey != key)
         return;
@@ -1003,6 +1003,7 @@ void MultiScreenWorker::initConnection()
         parent()->panel()->setDisplayMode(displayMode());
         parent()->panel()->setPositonValue(position());
         parent()->panel()->update();
+        parent()->update();
     });
 
     // 此时屏幕的显示器信息已经更新到m_mtrInfo中，需要根据这些信息顺序更新任务栏的以下信息：
@@ -1128,8 +1129,6 @@ void MultiScreenWorker::showAni(const QString &screen)
     m_showAni->setStartValue(getDockHideGeometry(screen, m_position, m_displayMode));
     m_showAni->setEndValue(getDockShowGeometry(screen, m_position, m_displayMode));
     m_showAni->start();
-
-    qDebug() << "MultiScreenWorker::showAni 55555";
 }
 
 void MultiScreenWorker::hideAni(const QString &screen, const Position &pos, const DisplayMode &displayMode)
@@ -1762,10 +1761,13 @@ void MultiScreenWorker::onTouchRelease(int type, int x, int y, const QString &ke
 
 void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
 {
+    qDebug() << "tryToShowDock 11111";
     if (m_draging || m_aniStart) {
         qDebug() << "dock is draging or animation is running";
         return;
     }
+
+    qDebug() << "tryToShowDock 22222";
 
     QString toScreen;
     QScreen *screen = Utils::screenAtByScaled(QPoint(eventX, eventY));
@@ -1773,6 +1775,8 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
         qDebug() << "cannot find the screen" << QPoint(eventX, eventY);
         return;
     }
+
+    qDebug() << "tryToShowDock 33333";
 
     toScreen = screen->name();
 
@@ -1790,6 +1794,9 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
     if (lastPos == QPoint(eventX, eventY)) {
         return;
     }
+
+    qDebug() << "tryToShowDock 44444";
+
     lastPos = QPoint(eventX, eventY);
 
 #ifdef QT_DEBUG
@@ -1801,6 +1808,8 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
         if (!m_delayTimer->isActive()) {
             m_delayScreen = toScreen;
             m_delayTimer->start();
+
+            qDebug() << "tryToShowDock 55555";
         }
     } else {
         // 任务栏隐藏状态，但需要显示
@@ -1808,11 +1817,15 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
             qDebug() << "showing";
             parent()->setFixedSize(dockRect(m_ds.current()).size());
             parent()->setGeometry(dockRect(m_ds.current()));
+
+            qDebug() << "tryToShowDock 66666";
             return;
         }
 
         if (m_showAni->state() == QVariantAnimation::Running) {
             qDebug() << "animation is running";
+
+            qDebug() << "tryToShowDock 77777";
             return;
         }
 
@@ -1820,6 +1833,7 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
         qDebug() << "boundRect:" << boundRect;
         if ((m_hideMode == HideMode::KeepHidden || m_hideMode == HideMode::SmartHide)
                 && (boundRect.size().isEmpty())) {
+            qDebug() << "tryToShowDock 88888";
             showAni(m_ds.current());
         }
     }
