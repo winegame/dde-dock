@@ -1514,7 +1514,7 @@ QRect MultiScreenWorker::getDockShowGeometry(const QString &screenName, const Po
         foreach (Monitor *inter, m_mtrInfo.validMonitor()) {
             if (inter->name() == screenName) {
                 // windowSizeFashion和windowSizeEfficient给出的值始终对应前端认为的界面高度或宽度（受缩放影响）
-                const int dockSize = int(displaymode == DisplayMode::Fashion ? m_dockInter->windowSizeFashion() : m_dockInter->windowSizeEfficient());
+                const int dockSize = int(displaymode == DisplayMode::Fashion ? m_dockInter->windowSizeFashion() : m_dockInter->windowSizeEfficient())+50;
                 switch (static_cast<Position>(pos)) {
                 case Top: {
                     rect.setX(inter->x() + WINDOWMARGIN);
@@ -1573,7 +1573,7 @@ QRect MultiScreenWorker::getDockHideGeometry(const QString &screenName, const Po
                     rect.setX(inter->x() + margin);
                     rect.setY(inter->y() + inter->h());
                     rect.setWidth(inter->w() - 2 * margin);
-                    rect.setHeight(0);
+                    rect.setHeight(10);
                 }
                 break;
                 case Left: {
