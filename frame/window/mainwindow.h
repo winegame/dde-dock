@@ -159,7 +159,7 @@ public slots:
 private slots:
     void compositeChanged();
     void adjustShadowMask();
-
+    void onMainWindowSizeChanged(QPoint offset);
     void onDbusNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
     void onDragFinished();
     void themeTypeChanged(DGuiApplicationHelper::ColorType themeType);
