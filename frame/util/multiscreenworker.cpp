@@ -1125,6 +1125,7 @@ void MultiScreenWorker::showAni(const QString &screen)
 
     // 显示之前先更新
     emit requestUpdateLayout();
+    emit requestNotifyWindowManager();
 
     m_showAni->setStartValue(getDockHideGeometry(screen, m_position, m_displayMode));
     m_showAni->setEndValue(getDockShowGeometry(screen, m_position, m_displayMode));
