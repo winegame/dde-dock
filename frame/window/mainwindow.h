@@ -155,14 +155,12 @@ signals:
 
 public slots:
     void resetDragWindow();
-    void onMainWindowSizeChanged(QPoint offset);
 
 private slots:
     void compositeChanged();
     void adjustShadowMask();
 
     void onDbusNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
-//    void onMainWindowSizeChanged(QPoint offset);
     void onDragFinished();
     void themeTypeChanged(DGuiApplicationHelper::ColorType themeType);
     void touchRequestResizeDock();
