@@ -1116,10 +1116,13 @@ void MultiScreenWorker::showAni(const QString &screen)
     parent()->panel()->move(0, 0);
 
     //2 任务栏位置已经正确就不需要再重复一次动画了
-    if (getDockShowGeometry(screen, m_position, m_displayMode) == parent()->geometry()) {
-        emit requestNotifyWindowManager();
-        return;
-    }
+//    if (getDockShowGeometry(screen, m_position, m_displayMode) == parent()->geometry()) {
+//        emit requestNotifyWindowManager();
+//        return;
+//    }
+    qDebug() << "getDockShowGeometry(screen, m_position, m_displayMode) = "<<getDockShowGeometry(screen, m_position, m_displayMode);
+    qDebug() << "parent()->geometry() = "<<parent()->geometry();
+    emit requestNotifyWindowManager();
 
     qDebug() << "MultiScreenWorker::showAni 44444";
 
