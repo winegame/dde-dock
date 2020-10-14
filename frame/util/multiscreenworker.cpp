@@ -1832,8 +1832,9 @@ void MultiScreenWorker::tryToShowDock(int eventX, int eventY)
 
         const QRect boundRect = parent()->visibleRegion().boundingRect();
         qDebug() << "boundRect:" << boundRect;
-        if ((m_hideMode == HideMode::KeepHidden || m_hideMode == HideMode::SmartHide)
-                && (boundRect.size().isEmpty())) {
+        qDebug() << "m_hideMode:" << m_hideMode;
+        qDebug() << "m_hideState:" << m_hideState;
+        if ((m_hideMode == HideMode::KeepHidden || m_hideMode == HideMode::SmartHide)) {
             qDebug() << "tryToShowDock 88888";
             showAni(m_ds.current());
         }
