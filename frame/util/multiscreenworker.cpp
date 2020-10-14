@@ -316,6 +316,7 @@ void MultiScreenWorker::showAniFinished()
     parent()->panel()->move(0, 0);
 
     parent()->update();
+    parent()->onMainWindowSizeChanged(QPoint());
 
     qDebug() << "showAniFinished 2222" << rect << parent();
 
