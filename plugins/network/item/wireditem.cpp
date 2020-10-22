@@ -244,6 +244,7 @@ void WiredItem::refreshConnectivity()
 
 void WiredItem::deviceStateChanged(NetworkDevice::DeviceStatus state)
 {
+    qDebug() << "network begin Activated state = " << state ;
     m_deviceState = state;
     switch (state) {
         case NetworkDevice::Unknown:
@@ -272,10 +273,12 @@ void WiredItem::deviceStateChanged(NetworkDevice::DeviceStatus state)
         }
         break;
         case NetworkDevice::Activated: {
+            qDebug() << "network begin Activated " ;
             m_loadingStat->stop();
             m_loadingStat->hide();
             m_loadingStat->setVisible(false);
             m_stateButton->setVisible(true);
+            qDebug() << "network Activated show connect pic" ;
         }
         break;
     }
@@ -285,8 +288,10 @@ void WiredItem::deviceStateChanged(NetworkDevice::DeviceStatus state)
 
 void WiredItem::changedActiveWiredConnectionInfo(const QJsonObject &connInfo)
 {
+    qDebug() << "changedActiveWiredConnectionInfo  connInfo = " << connInfo ;
     if (connInfo.isEmpty())
-        m_stateButton->setVisible(false);
+       m_stateButton->setVisible(false);
+
 
     auto strTitle = connInfo.value("ConnectionName").toString();
     m_connectedName->setText(strTitle);

@@ -143,7 +143,7 @@ void AccessPointWidget::setActiveState(const NetworkDevice::DeviceStatus state)
     m_activeState = state;
 
     const bool isActive = active();
-
+    qDebug() << "setActiveState isActive = " << isActive;
     m_stateButton->setVisible(isActive);
 }
 
