@@ -201,7 +201,6 @@ void SoundApplet::initUi()
     connect(m_volumeSlider, &VolumeSlider::requestPlaySoundEffect, this, &SoundApplet::onPlaySoundEffect);
     connect(m_audioInter, &DBusAudio::DefaultSinkChanged, this, static_cast<void (SoundApplet::*)()>(&SoundApplet::defaultSinkChanged));
     connect(m_audioInter, &DBusAudio::IncreaseVolumeChanged, this, &SoundApplet::increaseVolumeChanged);
-    connect(this, static_cast<void (SoundApplet::*)(DBusSink *) const>(&SoundApplet::defaultSinkChanged), this, &SoundApplet::onVolumeChanged);
     connect(m_listView, &DListView::clicked, this, [this](const QModelIndex & idx) {
         const Port * port = m_listView->model()->data(idx, Qt::WhatsThisPropertyRole).value<const Port *>();
         if (port) {
@@ -255,7 +254,7 @@ void SoundApplet::defaultSinkChanged()
     uint cardId = m_defSinkInter->card();
     activePort(portId,cardId);
 
-    emit defaultSinkChanged(m_defSinkInter);
+    onVolumeChanged(m_defSinkInter->volume());
 }
 
 void SoundApplet::onVolumeChanged(double volume)
