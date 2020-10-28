@@ -258,11 +258,9 @@ void SoundApplet::defaultSinkChanged()
     emit defaultSinkChanged(m_defSinkInter);
 }
 
-void SoundApplet::onVolumeChanged()
+void SoundApplet::onVolumeChanged(double volume)
 {
-    const float volume = m_defSinkInter->volume();
-
-    m_volumeSlider->setValue(std::min(150.0f, volume * 100.0f));
+    m_volumeSlider->setValue(static_cast<int>(std::min(150.0, volume * 100.0)));
 
     m_soundShow->setText(QString::number(volume * 100) + '%');
     emit volumeChanged(m_volumeSlider->value());
