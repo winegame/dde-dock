@@ -233,9 +233,10 @@ void SoundItem::refreshTips(const bool force)
 
 void SoundItem::sinkChanged(DBusSink *sink)
 {
+    qDebug() << "#############";
     m_sinkInter = sink;
 
     connect(m_sinkInter, &DBusSink::MuteChanged, this, &SoundItem::refreshIcon);
-    connect(m_sinkInter, &DBusSink::VolumeChanged, this, &SoundItem::refreshIcon);
+//    connect(m_sinkInter, &DBusSink::VolumeChanged, this, &SoundItem::refreshIcon);
     refreshIcon();
 }
