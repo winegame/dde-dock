@@ -254,6 +254,7 @@ void SoundApplet::defaultSinkChanged()
     uint cardId = m_defSinkInter->card();
     activePort(portId,cardId);
 
+    emit defaultSinkChanged(m_defSinkInter);
     onVolumeChanged(m_defSinkInter->volume());
 }
 
