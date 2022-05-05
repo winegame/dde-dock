@@ -329,11 +329,12 @@ void XEmbedTrayWidget::sendHoverEvent()
     setWindowOnTop(true);
     Display *display = IS_WAYLAND_DISPLAY ? m_display : QX11Info::display();
     if (display) {
-        if (m_injectMode == XTest) {
+        qWarning() << "XEmbedTrayWidget::sendHoverEvent: " << m_injectMode;
+        //if (m_injectMode == XTest) {
             // fake enter event
             XTestFakeMotionEvent(display, 0, p.x(), p.y(), CurrentTime);
             XFlush(display);
-        } else {
+        //} else {
             // 发送 montion notify event到client，实现hover事件
             auto c = QX11Info::connection();
             xcb_motion_notify_event_t* event = new xcb_motion_notify_event_t;
@@ -349,7 +350,7 @@ void XEmbedTrayWidget::sendHoverEvent()
             event->state = 0;
             xcb_send_event(c, false, m_windowId, XCB_EVENT_MASK_POINTER_MOTION, (char*)event);
             delete event;
-        }
+        //}
     }
 
     QTimer::singleShot(100, this, [=] { setX11PassMouseEvent(true); });
@@ -396,14 +397,15 @@ void XEmbedTrayWidget::sendClick(uint8_t mouseButton, int x, int y)
 
     Display *display = IS_WAYLAND_DISPLAY ? m_display : QX11Info::display();
 
-    if (m_injectMode == XTest) {
+    qWarning() << "XEmbedTrayWidget::sendClick: " << m_injectMode;
+    //if (m_injectMode == XTest) {
         XTestFakeMotionEvent(display, 0, p.x(), p.y(), CurrentTime);
         XFlush(display);
         XTestFakeButtonEvent(display, mouseButton, true, CurrentTime);
         XFlush(display);
         XTestFakeButtonEvent(display, mouseButton, false, CurrentTime);
         XFlush(display);
-    } else {
+    //} else {
         // press event
         xcb_button_press_event_t *pressEvent = new xcb_button_press_event_t;
         memset(pressEvent, 0x00, sizeof(xcb_button_press_event_t));
@@ -435,7 +437,7 @@ void XEmbedTrayWidget::sendClick(uint8_t mouseButton, int x, int y)
         releaseEvent->detail = mouseButton;
         xcb_send_event(c, false, m_windowId, XCB_EVENT_MASK_BUTTON_RELEASE, (char*)releaseEvent);
         delete releaseEvent;
-    }
+    //}
  
     QTimer::singleShot(100, this, [=] { setX11PassMouseEvent(true); });
 }
